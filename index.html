@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Searchcraft — The retrieval engine your AI deserves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0A0A0C;
+    --bg-surface: #111114;
+    --bg-elevated: #1A1A1F;
+    --bg-hover: #222228;
+    --accent: #D4942A;
+    --accent-dim: #A3721F;
+    --accent-glow: rgba(212, 148, 42, 0.08);
+    --accent-light: #F0C97A;
+    --text-primary: #E8E6E1;
+    --text-secondary: #9B9A95;
+    --text-muted: #5E5D59;
+    --border: rgba(255,255,255,0.06);
+    --border-accent: rgba(212, 148, 42, 0.2);
+    --font-display: 'Space Mono', monospace;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(212, 148, 42, 0.3);
+    color: var(--text-primary);
+  }
+
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(10, 10, 12, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 400;
+    transition: color 0.2s;
+    letter-spacing: 0.01em;
+  }
+
+  .nav-links a:hover { color: var(--text-primary); }
+
+  .nav-cta {
+    background: var(--accent) !important;
+    color: var(--bg-deep) !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    font-weight: 500 !important;
+    font-size: 0.82rem !important;
+    transition: opacity 0.2s;
+  }
+
+  .nav-cta:hover { opacity: 0.88; color: var(--bg-deep) !important; }
+
+  /* HERO */
+  .hero {
+    padding: 11rem 0 7rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212, 148, 42, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--border-accent);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    margin-bottom: 2.5rem;
+    background: var(--accent-glow);
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    max-width: 820px;
+    margin: 0 auto 1.75rem;
+    color: var(--text-primary);
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 560px;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 4rem;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent);
+    color: var(--bg-deep);
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: var(--text-primary);
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.92rem;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(255,255,255,0.15);
+    background: var(--bg-elevated);
+  }
+
+  /* DEMO TERMINAL */
+  .demo-terminal {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: left;
+  }
+
+  .demo-bar {
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .demo-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--bg-hover);
+  }
+
+  .demo-bar span {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-left: 0.5rem;
+  }
+
+  .demo-body {
+    padding: 1.5rem;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    line-height: 1.9;
+  }
+
+  .demo-line { margin-bottom: 0.25rem; }
+
+  .demo-comment { color: var(--text-muted); }
+  .demo-keyword { color: var(--accent); }
+  .demo-string { color: #7EC4A0; }
+  .demo-method { color: #9AAFE5; }
+  .demo-prop { color: var(--text-secondary); }
+
+  .demo-response {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .demo-response-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+  }
+
+  .demo-answer {
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    color: var(--text-primary);
+    line-height: 1.65;
+    padding: 1rem;
+    background: var(--accent-glow);
+    border-left: 2px solid var(--accent-dim);
+    border-radius: 0 8px 8px 0;
+  }
+
+  .demo-sources {
+    margin-top: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .demo-source {
+    font-family: var(--font-display);
+    font-size: 0.65rem;
+    padding: 0.25rem 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-muted);
+  }
+
+  /* STATS ROW */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 0;
+  }
+
+  .stat-item {
+    background: var(--bg-deep);
+    padding: 3.5rem 2rem;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+  }
+
+  /* PROBLEM SECTION */
+  .section {
+    padding: 7rem 0;
+  }
+
+  .section-tag {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    font-weight: 400;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+    max-width: 640px;
+  }
+
+  .section-desc {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    max-width: 560px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* PROBLEM/SOLUTION GRID */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 3.5rem;
+  }
+
+  .problem-card {
+    background: var(--bg-surface);
+    padding: 2.25rem;
+  }
+
+  .problem-card-label {
+    font-family: var(--font-display);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .problem-card h3 {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+    color: var(--text-primary);
+  }
+
+  .problem-card p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .problem-card.highlighted {
+    background: linear-gradient(135deg, rgba(212, 148, 42, 0.06), transparent);
+  }
+
+  .problem-card.highlighted .problem-card-label {
+    color: var(--accent-dim);
+  }
+
+  /* USE CASES */
+  .use-cases {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 3.5rem;
+  }
+
+  .use-case {
+    background: var(--bg-surface);
+    padding: 2.5rem 2rem;
+    transition: background 0.2s;
+  }
+
+  .use-case:hover { background: var(--bg-elevated); }
+
+  .use-case-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--accent-glow);
+    border: 1px solid var(--border-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: var(--accent);
+  }
+
+  .use-case h3 {
+    font-family: var(--font-display);
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .use-case p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* HOW IT WORKS */
+  .how-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3.5rem;
+    position: relative;
+  }
+
+  .how-steps::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: calc(16.66% + 1rem);
+    right: calc(16.66% + 1rem);
+    height: 1px;
+    background: var(--border);
+  }
+
+  .how-step {
+    text-align: center;
+  }
+
+  .how-step-number {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .how-step h3 {
+    font-family: var(--font-display);
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+
+  .how-step p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    font-weight: 300;
+  }
+
+  /* FEATURES GRID */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-top: 3.5rem;
+  }
+
+  .feature {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: border-color 0.2s;
+  }
+
+  .feature:hover { border-color: rgba(255,255,255,0.1); }
+
+  .feature h3 {
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .feature h3 span {
+    font-size: 0.85rem;
+  }
+
+  .feature p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 7rem 0 8rem;
+    text-align: center;
+  }
+
+  .cta-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 4.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-dim), transparent);
+  }
+
+  .cta-box h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .cta-box p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .cta-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  footer p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .problem-grid,
+    .use-cases,
+    .how-steps,
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .how-steps::before { display: none; }
+    .stats-row { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .hero { padding: 8rem 0 5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">searchcraft</a>
+  <ul class="nav-links">
+    <li><a href="#use-cases">Use cases</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="https://docs.searchcraft.io">Docs</a></li>
+    <li><a href="#" class="nav-cta">Start free</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-tag">Now with MCP &amp; RAG support</div>
+    <h1>Your AI is only as good as what it <em>retrieves</em></h1>
+    <p class="hero-sub">Searchcraft is the fast, accurate retrieval engine that powers RAG pipelines, AI agents, and answer experiences — without vector databases, without embeddings, without the complexity.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">Start building free &rarr;</a>
+      <a href="#" class="btn-secondary">Read the docs</a>
+    </div>
+
+    <!-- LIVE DEMO TERMINAL -->
+    <div class="demo-terminal">
+      <div class="demo-bar">
+        <div class="demo-dot"></div>
+        <div class="demo-dot"></div>
+        <div class="demo-dot"></div>
+        <span>answer-engine.js</span>
+      </div>
+      <div class="demo-body">
+        <div class="demo-line"><span class="demo-comment">// Retrieve context + generate an answer in one call</span></div>
+        <div class="demo-line"><span class="demo-keyword">const</span> <span class="demo-prop">answer</span> = <span class="demo-keyword">await</span> <span class="demo-method">searchcraft</span>.<span class="demo-method">answer</span>({</div>
+        <div class="demo-line">&nbsp;&nbsp;<span class="demo-prop">query</span>: <span class="demo-string">"What is our refund policy for enterprise plans?"</span>,</div>
+        <div class="demo-line">&nbsp;&nbsp;<span class="demo-prop">index</span>: <span class="demo-string">"help-center"</span>,</div>
+        <div class="demo-line">&nbsp;&nbsp;<span class="demo-prop">summarize</span>: <span class="demo-keyword">true</span></div>
+        <div class="demo-line">});</div>
+        <div class="demo-response">
+          <div class="demo-response-label">&#x2192; Response &middot; 12ms &middot; 3 sources</div>
+          <div class="demo-answer">Enterprise plans include a full refund within the first 30 days. After 30 days, customers receive a pro-rated credit for any unused portion of their billing period. Refund requests should be submitted through the account dashboard or by contacting your account manager.</div>
+          <div class="demo-sources">
+            <span class="demo-source">refund-policy.md &middot; 0.97</span>
+            <span class="demo-source">enterprise-billing.md &middot; 0.91</span>
+            <span class="demo-source">account-faq.md &middot; 0.84</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat-item">
+    <div class="stat-number">&lt;1ms</div>
+    <div class="stat-label">Median retrieval latency</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">Zero</div>
+    <div class="stat-label">Embeddings or vectors required</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">~80%</div>
+    <div class="stat-label">Less infra cost vs. vector RAG</div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="section">
+  <div class="container">
+    <div class="section-tag">The problem</div>
+    <h2 class="section-title">RAG shouldn't cost more than your model</h2>
+    <p class="section-desc">Teams building AI features are stitching together vector databases, embedding pipelines, chunking strategies, and rerankers — spending months on retrieval infrastructure before shipping anything.</p>
+
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-card-label">Traditional RAG stack</div>
+        <h3>Embedding pipeline</h3>
+        <p>Generate, store, and manage millions of vector embeddings across every content update.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card-label">Traditional RAG stack</div>
+        <h3>Vector database</h3>
+        <p>Pinecone, Weaviate, Qdrant — another service to provision, scale, and pay for monthly.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card-label">Traditional RAG stack</div>
+        <h3>Chunking &amp; reranking</h3>
+        <p>Decide chunk sizes, overlap strategies, and bolt on a reranker to fix what vectors miss.</p>
+      </div>
+      <div class="problem-card highlighted">
+        <div class="problem-card-label">Searchcraft approach</div>
+        <h3>Index your content. Query it. Done.</h3>
+        <p>Semantic understanding without embeddings. Sub-millisecond retrieval. One service, fully tunable, transparent scoring.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="section" id="use-cases" style="padding-top: 0;">
+  <div class="container">
+    <div class="section-tag">Built for what you're building</div>
+    <h2 class="section-title">One retrieval engine. Every AI pattern.</h2>
+    <p class="section-desc">Whether you're grounding an LLM, equipping an agent, or shipping an answer experience to users — Searchcraft is the context layer underneath.</p>
+
+    <div class="use-cases">
+      <div class="use-case">
+        <div class="use-case-icon">&#x25CB;</div>
+        <h3>RAG pipelines</h3>
+        <p>Feed your LLM accurate, structured context in sub-milliseconds. No hallucinations, no stale embeddings, no vector database to manage.</p>
+      </div>
+      <div class="use-case">
+        <div class="use-case-icon">&#x25B7;</div>
+        <h3>AI agents via MCP</h3>
+        <p>Give any MCP-compatible agent — Claude, GPT, Gemini — instant access to your indexed content. One integration, every model.</p>
+      </div>
+      <div class="use-case">
+        <div class="use-case-icon">&#x25A1;</div>
+        <h3>Answer experiences</h3>
+        <p>Ship "ask our docs" and chat-with-content features in a single sprint. Retrieval + summarization, out of the box.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how" style="border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-tag">How it works</div>
+    <h2 class="section-title">From content to answers in three steps</h2>
+
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-step-number">01</div>
+        <h3>Index your content</h3>
+        <p>Push documents via API, connect a CMS, or use our database import tool. Searchcraft indexes and understands your content automatically.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-number">02</div>
+        <h3>Retrieve with intent</h3>
+        <p>Our Semantic Control Layer detects what users actually mean — combining keyword precision with semantic understanding, no vectors needed.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-number">03</div>
+        <h3>Power any AI interface</h3>
+        <p>Pipe structured results into your RAG pipeline, connect via MCP for agents, or use our built-in answer engine for instant AI summaries.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="features" style="border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-tag">Under the hood</div>
+    <h2 class="section-title">Engineered for retrieval performance</h2>
+    <p class="section-desc">Built in Rust. Designed for AI workloads. Every feature exists to get the right content to your model, faster.</p>
+
+    <div class="features-grid">
+      <div class="feature">
+        <h3><span>&#x26A1;</span> Sub-millisecond retrieval</h3>
+        <p>Hundreds of millions of records at speeds that make your LLM the bottleneck — not your retrieval layer.</p>
+      </div>
+      <div class="feature">
+        <h3><span>&#x1f50d;</span> Semantic Control Layer</h3>
+        <p>Intent detection and semantic understanding without embeddings. Fully tunable, fully transparent scoring you can explain and debug.</p>
+      </div>
+      <div class="feature">
+        <h3><span>&#x2B21;</span> Federated retrieval</h3>
+        <p>Query across multiple content sources in a single call. Combine knowledge bases, help centers, and product docs into one unified context.</p>
+      </div>
+      <div class="feature">
+        <h3><span>&#x2699;</span> Decoupled tuning</h3>
+        <p>Adjust relevancy weights, field boosting, time decay, and synonyms in real-time. No reindexing. No redeployments.</p>
+      </div>
+      <div class="feature">
+        <h3><span>&#x1f4cb;</span> Structured results</h3>
+        <p>Clean, typed JSON with field-level data your LLM can trust. Not raw text blobs — structured context that reduces token waste.</p>
+      </div>
+      <div class="feature">
+        <h3><span>&#x1f512;</span> Self-hosted or cloud</h3>
+        <p>Run Searchcraft Core on your own infrastructure via Docker, or use Searchcraft Cloud for zero-ops deployment. Your data, your rules.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Stop building retrieval infrastructure.<br>Start shipping AI features.</h2>
+      <p>Free tier available. No credit card required. Index your first 10,000 documents in minutes.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn-primary">Start building free &rarr;</a>
+        <a href="#" class="btn-secondary">Talk to the team</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Made in Colorado &middot; &copy; 2026 Searchcraft Inc. &middot; <a href="#">Docs</a> &middot; <a href="#">GitHub</a> &middot; <a href="#">Discord</a> &middot; <a href="#">Status</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
