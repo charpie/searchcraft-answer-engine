@@ -618,6 +618,114 @@
     font-weight: 300;
   }
 
+  /* TRUST */
+  .trust-section {
+    padding: 5rem 0;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .trust-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 4rem;
+    align-items: start;
+    margin-top: 0;
+  }
+
+  .trust-left {
+    position: sticky;
+    top: 5rem;
+  }
+
+  .trust-quote {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--text);
+    margin-top: 2rem;
+    padding-left: 1.25rem;
+    border-left: 3px solid var(--border);
+  }
+
+  .trust-quote-attr {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-style: normal;
+    color: var(--text-muted);
+    margin-top: 0.75rem;
+    padding-left: 1.25rem;
+  }
+
+  .trust-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .trust-item {
+    padding: 1.75rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .trust-item:first-child { padding-top: 0; }
+  .trust-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .trust-concern {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .trust-concern-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+
+  .trust-concern-icon.resolved {
+    background: var(--green-bg);
+    color: var(--green);
+    border: 1px solid var(--green-border);
+  }
+
+  .trust-concern-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+
+  .trust-item h3 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.45rem;
+    color: var(--text);
+  }
+
+  .trust-item p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .trust-highlight {
+    font-weight: 500;
+    color: var(--text);
+  }
+
   /* BEYOND WP */
   .beyond-section {
     padding: 5rem 0;
@@ -735,9 +843,11 @@
     .compare-grid,
     .steps-grid,
     .outcomes-grid,
-    .beyond-grid {
+    .beyond-grid,
+    .trust-layout {
       grid-template-columns: 1fr;
     }
+    .trust-left { position: static; }
     .nav-links { display: none; }
     .hero { padding: 4rem 0 3rem; }
     .mock-site { padding: 1.5rem; }
@@ -763,7 +873,7 @@
 <section class="hero">
   <div class="container">
     <div class="hero-eyebrow">WordPress plugin &middot; 5-minute setup &middot; Free tier</div>
-    <h1>Your visitors deserve answers, not ten blue links</h1>
+    <h1>Your visitors deserve answers, not a page of maybes</h1>
     <p class="hero-sub">Searchcraft replaces your WordPress search with an AI-powered answer experience. Visitors ask questions in plain language and get real answers — sourced from your content.</p>
     <div class="hero-actions">
       <a href="#" class="btn-primary">Install free plugin &rarr;</a>
@@ -945,6 +1055,69 @@
         <div class="outcome-metric">&uarr; Trust</div>
         <h3>Credibility that compounds</h3>
         <p>Sourced answers with citations build authority. Your visitors see your site as a knowledge destination, not just a content feed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust-section" id="trust">
+  <div class="container">
+    <div class="trust-layout">
+      <div class="trust-left">
+        <div class="section-eyebrow">A note on AI and trust</div>
+        <h2 class="section-title">We understand the hesitation</h2>
+        <p class="section-desc" style="max-width: 100%;">Publishers have watched AI platforms scrape their work and serve it without credit. That skepticism is earned. Searchcraft is built differently — here's how.</p>
+        <p class="trust-quote">"The AI only knows what we've published. It can't make things up because it has nothing else to draw from."</p>
+        <p class="trust-quote-attr">— How Searchcraft's answer engine works</p>
+      </div>
+      <div class="trust-items">
+
+        <div class="trust-item">
+          <div class="trust-concern">
+            <span class="trust-concern-icon resolved">&#x2713;</span>
+            <span class="trust-concern-label">Common concern</span>
+          </div>
+          <h3>"AI will make things up and put words in our mouth"</h3>
+          <p>Searchcraft's AI can <span class="trust-highlight">only answer using your published content</span>. It doesn't draw from the open web, it doesn't hallucinate facts, and it doesn't generate opinions. Every answer is assembled from your actual articles, and every answer cites the specific sources it drew from. If your content doesn't cover a topic, the AI won't pretend it does — it returns standard search results instead.</p>
+        </div>
+
+        <div class="trust-item">
+          <div class="trust-concern">
+            <span class="trust-concern-icon resolved">&#x2713;</span>
+            <span class="trust-concern-label">Common concern</span>
+          </div>
+          <h3>"AI answers will replace our articles and kill pageviews"</h3>
+          <p>The opposite. Every AI answer <span class="trust-highlight">links directly to the articles it drew from</span> — by design, it's a doorway into your content, not a replacement for it. Visitors who get a clear answer are more likely to click through and read the full piece than visitors who see a wall of irrelevant results and leave. The answer creates the interest; your articles fulfill it.</p>
+        </div>
+
+        <div class="trust-item">
+          <div class="trust-concern">
+            <span class="trust-concern-icon resolved">&#x2713;</span>
+            <span class="trust-concern-label">Common concern</span>
+          </div>
+          <h3>"I don't want our content sent to third-party AI models"</h3>
+          <p>Your content is indexed on <span class="trust-highlight">Searchcraft's own infrastructure</span> — it's not sent to OpenAI, Google, or any other foundation model provider. The AI summarization runs through a controlled pipeline where your content is used as context for generation, not as training data. Nothing is stored by third-party models. Nothing is used to train them.</p>
+        </div>
+
+        <div class="trust-item">
+          <div class="trust-concern">
+            <span class="trust-concern-icon resolved">&#x2713;</span>
+            <span class="trust-concern-label">Common concern</span>
+          </div>
+          <h3>"We don't want to lose editorial control"</h3>
+          <p>You control everything. Choose <span class="trust-highlight">which content types get indexed</span> — posts, pages, specific categories, custom post types. Set which fields influence results. Adjust relevancy weights and boosting. Turn AI summaries on or off per section. And if you ever decide AI answers aren't right for your audience, one toggle in the plugin settings disables them entirely. Standard search keeps working.</p>
+        </div>
+
+        <div class="trust-item">
+          <div class="trust-concern">
+            <span class="trust-concern-icon resolved">&#x2713;</span>
+            <span class="trust-concern-label">Common concern</span>
+          </div>
+          <h3>"Our readers don't trust AI"</h3>
+          <p>They don't need to trust AI — they need to trust <span class="trust-highlight">your content</span>. Every Searchcraft answer says "here's what <em>your site</em> has published on this topic" with direct links to the source articles. The credibility comes from your editorial standards, not from an AI brand. Readers see it as your site being helpful, not as a chatbot guessing.</p>
+        </div>
+
       </div>
     </div>
   </div>
