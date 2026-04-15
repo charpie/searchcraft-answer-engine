@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Searchcraft for WordPress — Your visitors deserve answers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF7F2;
+    --bg-warm: #F3EDE4;
+    --bg-card: #FFFFFF;
+    --bg-dark: #1C1917;
+    --bg-dark-surface: #292524;
+    --accent: #C2410C;
+    --accent-light: #FB923C;
+    --accent-bg: #FFF7ED;
+    --accent-border: #FDBA74;
+    --green: #15803D;
+    --green-bg: #F0FDF4;
+    --green-border: #86EFAC;
+    --red: #B91C1C;
+    --red-bg: #FEF2F2;
+    --text: #1C1917;
+    --text-secondary: #57534E;
+    --text-muted: #A8A29E;
+    --border: #E7E5E4;
+    --border-light: #F5F5F4;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Outfit', system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: rgba(194, 65, 12, 0.15); }
+
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* NAV */
+  nav {
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .nav-logo {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-badge {
+    font-size: 0.65rem;
+    font-weight: 500;
+    padding: 0.2rem 0.55rem;
+    background: var(--bg-dark);
+    color: #fff;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--accent);
+    color: #fff;
+    padding: 0.65rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.88rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--font-body);
+  }
+
+  .btn-primary:hover { background: #9A3412; transform: translateY(-1px); }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--bg-card);
+    color: var(--text);
+    padding: 0.65rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.88rem;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+
+  .btn-outline:hover { border-color: #D6D3D1; background: #FAFAF9; }
+
+  /* HERO */
+  .hero {
+    padding: 5rem 0 4rem;
+    text-align: center;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    max-width: 720px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 540px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-note {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  /* BROWSER MOCK */
+  .browser-mock {
+    max-width: 800px;
+    margin: 3.5rem auto 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 12px 40px rgba(0,0,0,0.06);
+  }
+
+  .browser-bar {
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    background: #FAFAF9;
+  }
+
+  .browser-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .browser-dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+
+  .browser-url {
+    flex: 1;
+    margin-left: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    background: var(--bg);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+  }
+
+  .mock-site {
+    padding: 2.5rem 3rem;
+  }
+
+  .mock-site-header {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+
+  .mock-site-tagline {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+
+  /* SEARCH WIDGET MOCK */
+  .widget-mock {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .widget-input {
+    display: flex;
+    align-items: center;
+    padding: 0.85rem 1rem;
+    gap: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .widget-search-icon {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .widget-query {
+    font-size: 0.9rem;
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  .widget-body { padding: 1.25rem; }
+
+  .widget-answer {
+    padding: 1rem 1.15rem;
+    background: var(--accent-bg);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 1rem;
+  }
+
+  .widget-answer-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .widget-answer p {
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .widget-results-label {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+    margin-bottom: 0.65rem;
+  }
+
+  .widget-result {
+    display: flex;
+    gap: 0.85rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .widget-result:last-child { border-bottom: none; }
+
+  .widget-result-num {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    min-width: 16px;
+    padding-top: 0.1rem;
+  }
+
+  .widget-result-title {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 0.15rem;
+  }
+
+  .widget-result-excerpt {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* BEFORE/AFTER */
+  .compare-section {
+    padding: 5rem 0;
+  }
+
+  .compare-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-desc {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 520px;
+    margin: 0 auto;
+    font-weight: 300;
+    line-height: 1.65;
+  }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .compare-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .compare-card-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .compare-card-title {
+    font-size: 0.82rem;
+    font-weight: 500;
+  }
+
+  .compare-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+    letter-spacing: 0.02em;
+  }
+
+  .compare-tag.before {
+    background: var(--red-bg);
+    color: var(--red);
+  }
+
+  .compare-tag.after {
+    background: var(--green-bg);
+    color: var(--green);
+  }
+
+  .compare-card-body {
+    padding: 1.5rem;
+  }
+
+  .compare-search-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0.85rem;
+    background: var(--bg);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    margin-bottom: 1.25rem;
+  }
+
+  .compare-search-bar span {
+    font-size: 0.8rem;
+    color: var(--text);
+  }
+
+  .compare-search-icon { font-size: 0.8rem; color: var(--text-muted); }
+
+  .bad-result {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .bad-result:last-child { border-bottom: none; }
+
+  .bad-result-title {
+    font-size: 0.78rem;
+    color: #2563EB;
+    font-weight: 500;
+    margin-bottom: 0.15rem;
+  }
+
+  .bad-result-excerpt {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  .bad-result-tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    background: var(--red-bg);
+    color: var(--red);
+    margin-top: 0.25rem;
+    font-weight: 500;
+  }
+
+  .good-answer {
+    padding: 0.85rem 1rem;
+    background: var(--green-bg);
+    border-left: 3px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 1rem;
+  }
+
+  .good-answer-label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--green);
+    margin-bottom: 0.3rem;
+  }
+
+  .good-answer p {
+    font-size: 0.78rem;
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  .good-result {
+    padding: 0.5rem 0;
+  }
+
+  .good-result-title {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  .good-result-match {
+    font-size: 0.65rem;
+    color: var(--green);
+    font-weight: 500;
+  }
+
+  /* STEPS */
+  .steps-section {
+    padding: 5rem 0;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    margin-top: 3rem;
+  }
+
+  .step {
+    text-align: center;
+    padding: 0 0.5rem;
+  }
+
+  .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+  }
+
+  .step h3 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .step p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .step-code {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.35rem 0.85rem;
+    background: var(--bg-dark);
+    color: var(--accent-light);
+    font-family: 'Courier New', monospace;
+    font-size: 0.72rem;
+    border-radius: 6px;
+  }
+
+  /* OUTCOMES */
+  .outcomes-section {
+    padding: 5rem 0;
+  }
+
+  .outcomes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-top: 3rem;
+  }
+
+  .outcome {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem 1.75rem;
+    transition: border-color 0.2s;
+  }
+
+  .outcome:hover { border-color: #D6D3D1; }
+
+  .outcome-metric {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+    margin-bottom: 0.35rem;
+  }
+
+  .outcome h3 {
+    font-size: 0.92rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .outcome p {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    font-weight: 300;
+  }
+
+  /* BEYOND WP */
+  .beyond-section {
+    padding: 5rem 0;
+    background: var(--bg-dark);
+    color: #E7E5E4;
+  }
+
+  .beyond-section .section-eyebrow { color: var(--accent-light); }
+  .beyond-section .section-title { color: #FAF7F2; }
+  .beyond-section .section-desc { color: #A8A29E; }
+
+  .beyond-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 3rem;
+  }
+
+  .beyond-card {
+    background: var(--bg-dark-surface);
+    padding: 2rem 1.75rem;
+  }
+
+  .beyond-card h3 {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #FAF7F2;
+  }
+
+  .beyond-card p {
+    font-size: 0.82rem;
+    color: #A8A29E;
+    line-height: 1.55;
+    font-weight: 300;
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 6rem 0;
+    text-align: center;
+  }
+
+  .cta-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 4rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+  }
+
+  .cta-box h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3vw, 1.85rem);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .cta-box p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  .cta-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .cta-note {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2.5rem 2rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+
+  footer p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .compare-grid,
+    .steps-grid,
+    .outcomes-grid,
+    .beyond-grid {
+      grid-template-columns: 1fr;
+    }
+    .nav-links { display: none; }
+    .hero { padding: 4rem 0 3rem; }
+    .mock-site { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="../" class="nav-logo">searchcraft</a>
+    <span class="nav-badge">WordPress</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#compare">Before &amp; after</a></li>
+    <li><a href="#setup">Setup</a></li>
+    <li><a href="https://docs.searchcraft.io">Docs</a></li>
+    <li><a href="#" class="btn-primary" style="padding: 0.5rem 1.25rem; font-size: 0.82rem;">Install plugin</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">WordPress plugin &middot; 5-minute setup &middot; Free tier</div>
+    <h1>Your visitors deserve answers, not ten blue links</h1>
+    <p class="hero-sub">Searchcraft replaces your WordPress search with an AI-powered answer experience. Visitors ask questions in plain language and get real answers — sourced from your content.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">Install free plugin &rarr;</a>
+      <a href="#" class="btn-outline">See it live</a>
+    </div>
+    <p class="hero-note">Works with any theme. No code required. Free for up to 10,000 queries/month.</p>
+
+    <!-- BROWSER MOCK -->
+    <div class="browser-mock">
+      <div class="browser-bar">
+        <div class="browser-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="browser-url">yourblog.com</div>
+      </div>
+      <div class="mock-site">
+        <div class="mock-site-header">The Daily Chronicle</div>
+        <div class="mock-site-tagline">Independent journalism since 2014</div>
+
+        <div class="widget-mock">
+          <div class="widget-input">
+            <span class="widget-search-icon">&#x1F50D;</span>
+            <span class="widget-query">What caused the recent bank failures?</span>
+          </div>
+          <div class="widget-body">
+            <div class="widget-answer">
+              <div class="widget-answer-label">AI Answer &middot; 3 sources</div>
+              <p>Several mid-size regional banks failed primarily due to concentrated exposure to long-duration bonds that lost value as interest rates rose sharply. Depositor panic accelerated withdrawals beyond what reserves could cover, triggering FDIC intervention in three cases between March and May.</p>
+            </div>
+            <div class="widget-results-label">Sources from your site</div>
+            <div class="widget-result">
+              <span class="widget-result-num">1</span>
+              <div>
+                <div class="widget-result-title">How Rising Rates Broke Regional Banks</div>
+                <div class="widget-result-excerpt">An analysis of the bond portfolio mismatches that led to the largest bank failures since 2008...</div>
+              </div>
+            </div>
+            <div class="widget-result">
+              <span class="widget-result-num">2</span>
+              <div>
+                <div class="widget-result-title">The 48 Hours Before SVB Collapsed</div>
+                <div class="widget-result-excerpt">A timeline of the deposit run that moved $42 billion in a single day...</div>
+              </div>
+            </div>
+            <div class="widget-result">
+              <span class="widget-result-num">3</span>
+              <div>
+                <div class="widget-result-title">FDIC's New Playbook for Bank Seizures</div>
+                <div class="widget-result-excerpt">Why regulators moved faster this time — and what it means for depositors...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="compare-section" id="compare">
+  <div class="container">
+    <div class="compare-header">
+      <div class="section-eyebrow">Before &amp; after</div>
+      <h2 class="section-title">Default WordPress search loses visitors.<br>Searchcraft keeps them.</h2>
+      <p class="section-desc">WordPress ships with SQL LIKE queries that match keywords literally. Visitors get irrelevant results, give up, and leave.</p>
+    </div>
+
+    <div class="compare-grid">
+      <div class="compare-card">
+        <div class="compare-card-header">
+          <span class="compare-card-title">Default WordPress search</span>
+          <span class="compare-tag before">Before</span>
+        </div>
+        <div class="compare-card-body">
+          <div class="compare-search-bar">
+            <span class="compare-search-icon">&#x1F50D;</span>
+            <span>bank failures cause</span>
+          </div>
+          <div class="bad-result">
+            <div class="bad-result-title">Our Bank of Recipes: 50 Failure-Proof Breads</div>
+            <div class="bad-result-excerpt">Master the art of baking with our tested collection of bread recipes that never fail...</div>
+            <span class="bad-result-tag">Irrelevant</span>
+          </div>
+          <div class="bad-result">
+            <div class="bad-result-title">Root Cause Analysis: Why Projects Fail</div>
+            <div class="bad-result-excerpt">A project management deep dive into the most common causes of team failures...</div>
+            <span class="bad-result-tag">Wrong topic</span>
+          </div>
+          <div class="bad-result">
+            <div class="bad-result-title">Banking on the Future: Fintech in 2025</div>
+            <div class="bad-result-excerpt">How digital-first banking platforms are reshaping the financial landscape...</div>
+            <span class="bad-result-tag">Keyword match only</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="compare-card" style="border-color: var(--green-border);">
+        <div class="compare-card-header">
+          <span class="compare-card-title">With Searchcraft</span>
+          <span class="compare-tag after">After</span>
+        </div>
+        <div class="compare-card-body">
+          <div class="compare-search-bar">
+            <span class="compare-search-icon">&#x1F50D;</span>
+            <span>What caused the recent bank failures?</span>
+          </div>
+          <div class="good-answer">
+            <div class="good-answer-label">AI Answer</div>
+            <p>Several mid-size regional banks failed primarily due to concentrated exposure to long-duration bonds that lost value as interest rates rose sharply...</p>
+          </div>
+          <div class="good-result">
+            <div class="good-result-title">How Rising Rates Broke Regional Banks</div>
+            <div class="good-result-match">98% relevance</div>
+          </div>
+          <div class="good-result">
+            <div class="good-result-title">The 48 Hours Before SVB Collapsed</div>
+            <div class="good-result-match">94% relevance</div>
+          </div>
+          <div class="good-result">
+            <div class="good-result-title">FDIC's New Playbook for Bank Seizures</div>
+            <div class="good-result-match">89% relevance</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="steps-section" id="setup">
+  <div class="container">
+    <div class="compare-header">
+      <div class="section-eyebrow">Setup</div>
+      <h2 class="section-title">Five minutes. No code. Any theme.</h2>
+      <p class="section-desc">Searchcraft indexes your existing WordPress content automatically. There's nothing to configure unless you want to.</p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Install the plugin</h3>
+        <p>Search "Searchcraft" in your WordPress plugin directory, or upload the plugin zip. Activate it with one click.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Connect your site</h3>
+        <p>Sign up for a free Searchcraft Cloud account and paste your API key. Your posts, pages, and custom fields start indexing automatically.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Your search is live</h3>
+        <p>Searchcraft replaces your default WordPress search instantly. AI answers, fuzzy matching, and real-time results — working out of the box.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOMES -->
+<section class="outcomes-section">
+  <div class="container">
+    <div class="compare-header">
+      <div class="section-eyebrow">Why it matters</div>
+      <h2 class="section-title">Search is where engagement lives or dies</h2>
+      <p class="section-desc">Visitors who search are your most engaged users. When they find what they need, they stay. When they don't, they leave for good.</p>
+    </div>
+
+    <div class="outcomes-grid">
+      <div class="outcome">
+        <div class="outcome-metric">&darr; Bounce</div>
+        <h3>Lower bounce rates</h3>
+        <p>When your search actually answers questions, visitors stop hitting the back button and start reading your content.</p>
+      </div>
+      <div class="outcome">
+        <div class="outcome-metric">&uarr; Time</div>
+        <h3>Longer sessions</h3>
+        <p>AI answers surface related articles naturally. One question leads to three page views instead of an exit.</p>
+      </div>
+      <div class="outcome">
+        <div class="outcome-metric">&uarr; Trust</div>
+        <h3>Credibility that compounds</h3>
+        <p>Sourced answers with citations build authority. Your visitors see your site as a knowledge destination, not just a content feed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEYOND WORDPRESS -->
+<section class="beyond-section">
+  <div class="container">
+    <div class="compare-header">
+      <div class="section-eyebrow">Beyond WordPress</div>
+      <h2 class="section-title">Built on infrastructure that scales with you</h2>
+      <p class="section-desc">Searchcraft isn't just a WordPress plugin — it's a full retrieval engine. As your needs grow, so does what you can build.</p>
+    </div>
+
+    <div class="beyond-grid">
+      <div class="beyond-card">
+        <h3>RAG-ready API</h3>
+        <p>Use the same engine powering your WordPress search to ground LLMs, build chatbots, or power internal AI tools — via a simple REST API.</p>
+      </div>
+      <div class="beyond-card">
+        <h3>MCP for AI agents</h3>
+        <p>Connect your content to Claude, GPT, and other AI agents through the Model Context Protocol. Your content, accessible to any model.</p>
+      </div>
+      <div class="beyond-card">
+        <h3>Self-hosted option</h3>
+        <p>Need full control? Run Searchcraft Core on your own infrastructure via Docker. Same engine, your servers, your rules.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Give your visitors the search<br>experience they actually deserve</h2>
+      <p>Free for up to 10,000 queries per month. No credit card. No code. Five minutes.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn-primary">Install free plugin &rarr;</a>
+        <a href="#" class="btn-outline">Read the docs</a>
+      </div>
+      <p class="cta-note">Works with WordPress 5.8+ &middot; PHP 7.4+ &middot; Any theme</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Made in Colorado &middot; &copy; 2026 Searchcraft Inc. &middot; <a href="#">Docs</a> &middot; <a href="#">GitHub</a> &middot; <a href="#">Discord</a> &middot; <a href="https://www.searchcraft.io">searchcraft.io</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
